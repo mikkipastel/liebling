@@ -56,7 +56,10 @@ into the {body} of the default.hbs template --}}
               </div>
             </header>
             <div class="pos-relative js-post-content">
-              <aside class="gh-sidebar"><div class="gh-toc"></div></aside> {{! The TOC will be inserted here }}
+              <aside class="gh-sidebar">
+                <p>On This Page</p>
+                <div class="gh-toc"></div>
+              </aside> {{! The TOC will be inserted here }}
               <div class="m-share">
                 <div class="m-share__content js-sticky">
                   <a href="https://www.facebook.com/sharer/sharer.php?u={{url absolute='true'}}"
