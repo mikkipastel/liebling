@@ -72,6 +72,9 @@
 
     <link rel="stylesheet" type="text/css" href="{{asset "css/app.css"}}" media="screen" />
 
+    {{!-- TOC styles --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.25.0/tocbot.css">
+
     {{!-- This #block helper will inject a stylesheet for a specific page --}}
     {{{block "styles"}}}
 
@@ -84,9 +87,42 @@
 
     {{!-- This style overrides the accent color to match the one from the Admin --}}
     <style>
-      :root {
-        --primary-subtle-color: var(--ghost-accent-color) !important;
+
+      .gh-content {
+        position: relative;
       }
+
+      .gh-toc > .toc-list {
+        position: relative;
+        font-size: medium;
+      }
+
+      .toc-list {
+        overflow: hidden;
+        list-style: none;
+      }
+
+      @media (min-width: 1300px) {
+        .gh-sidebar {
+            position: absolute; 
+            top: 0;
+            bottom: 0;
+            margin-top: 4vmin;
+            left: -500px;
+            width: 400px;
+            grid-column-start: auto;
+        }
+
+        .gh-toc {
+            position: sticky; /* On larger screens, TOC will stay in the same spot on the page */
+            top: 4vmin;
+        }
+      }
+
+      .gh-toc .is-active-link::before {
+        background-color: var(--ghost-accent-color); /* Defines TOC   accent color based on Accent color set in Ghost Admin */
+        font-size: small;
+      } 
     </style>
 
     {{!-- These variables are used to make the search form work --}}
@@ -146,6 +182,23 @@
     <script defer src="{{asset "js/manifest.js"}}"></script>
     <script defer src="{{asset "js/vendor.js"}}"></script>
     <script defer src="{{asset "js/app.js"}}"></script>
+
+    {{!-- Tocbot script --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.25.0/tocbot.min.js"></script>
+
+    {{! Initialize Tocbot after you load the script }}
+    <script>
+      tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.gh-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.gh-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h1, h2',
+        // Ensure correct positioning
+        hasInnerContainers: true,
+      });
+    </script>
 
     {{!-- The #block helper will pull in data from the #contentFor other template files --}}
     {{{block "scripts"}}}
